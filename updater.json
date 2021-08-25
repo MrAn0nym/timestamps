@@ -4,7 +4,7 @@
         "version": "1.0.0",
         "build": "https://raw.githubusercontent.com/MrAn0nym/timestamps/builds/%s.zip"
     },
-    "MyFirstPlugin": {
+    "Timestamps": {
         "version": "1.0.0"
     }
 }
