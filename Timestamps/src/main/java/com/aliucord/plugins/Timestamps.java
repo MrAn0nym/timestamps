@@ -27,8 +27,8 @@ public class Timestamps extends Plugin {
     var manifest = new Manifest();
     manifest.authors =
         new Manifest.Author[] {new Manifest.Author("Namenlosxy", 339303461877186560L)};
-    manifest.description = "Generate unix timestamps for discord";
-    manifest.version = "1.0.0";
+    manifest.description = "Generates unix timestamps for discord and copies it to the clipboard";
+    manifest.version = "1.0.1";
     manifest.updateUrl = "https://raw.githubusercontent.com/MrAn0nym/timestamps/builds/updater.json";
     return manifest;
   }
