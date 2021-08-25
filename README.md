@@ -1,16 +1,17 @@
 # `Aliucord-plugins`
 
-Template for an [Aliucord](https://github.com/Aliucord) plugins repo
+## Timestamps
+ Use /timestamp to generate a discord timestamp with the current time.
+ - With `yyyy` ,`MM`, `dd`, `HH`, `mm` or `ss` you can change the date/time.
+ - With `z` you can change the timezone (valid [timezones](https://github.com/MrAn0nym/timestamps/timezones.md))
+ - With `mode` you can change the style of the timestamp
 
-## Setup
-
-1. Generate a repo based on this template
-
-## Getting started with writing your first plugin
-
-This template includes 4 example plugins which you can find in the ExamplePlugins folder.
-
-1. Copy the `HelloWorld` example plugin into the root of this folder as MyFirstPlugin and fix all values in the plugin Manifest method
-2. Uncomment the first line in `settings.gradle.kts` to tell gradle to include it. Whenever you add a new plugin you have to add it here
-3. Inspect the updater.json file and uncomment the MyFirstPlugin section. Whenever you add a new plugin you have to add it to updater.json similar to the MyFirstPlugin block
-4. Run `./gradlew MyFirstPlugin:make` or `./gradlew MyFirstPlugin:deployWithAdb`
+| Mode                                      | Example                      |
+|-------------------------------------------|------------------------------|
+| Short Time                                | 16:20                        |
+| Long Time                                 | 16:20:30                     |
+| Short Date                                | 20/04/2021                   |
+| Long Date                                 | 20 April 2021                |
+| Short Date/Time *(default)*               | 20 April 2021 16:20          |
+| Long Date/Time                            | Tuesday, 20 April 2021 16:20 |
+| Relative Time *(only working on Desktop)* | 2 months ago                 |
