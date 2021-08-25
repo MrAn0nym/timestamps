@@ -2,6 +2,16 @@
 
 [More information](https://docs.oracle.com/javase/8/docs/api/java/time/ZoneId.html) about possible ZoneIds: 
 
+```
+If the zone ID equals 'Z', the result is ZoneOffset.UTC.
+If the zone ID consists of a single letter, the zone ID is invalid and DateTimeException is thrown.
+If the zone ID starts with '+' or '-', the ID is parsed as a ZoneOffset using ZoneOffset.of(String).
+If the zone ID equals 'GMT', 'UTC' or 'UT' then the result is a ZoneId with the same ID and rules equivalent to ZoneOffset.UTC.
+If the zone ID starts with 'UTC+', 'UTC-', 'GMT+', 'GMT-', 'UT+' or 'UT-' then the ID is a prefixed offset-based ID. The ID is split in two, with a two or three letter prefix and a suffix starting with the sign. The suffix is parsed as a ZoneOffset. The result will be a ZoneId with the specified UTC/GMT/UT prefix and the normalized offset ID as per ZoneOffset.getId(). The rules of the returned ZoneId will be equivalent to the parsed ZoneOffset.
+All other IDs are parsed as region-based zone IDs. Region IDs must match the regular expression [A-Za-z][A-Za-z0-9~/._+-]+ otherwise a DateTimeException is thrown. If the zone ID is not in the configured set of IDs, ZoneRulesException is thrown. The detailed format of the region ID depends on the group supplying the data. The default set of data is supplied by the IANA Time Zone Database (TZDB). This has region IDs of the form '{area}/{city}', such as 'Europe/Paris' or 'America/New_York'. This is compatible with most IDs from TimeZone.
+```
+
+
  - Asia/Aden
  - America/Cuiaba
  - Etc/GMT+9
