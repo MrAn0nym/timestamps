@@ -1,5 +1,7 @@
 **Not complete**
 
+[More information](https://docs.oracle.com/javase/8/docs/api/java/time/ZoneId.html) about possible ZoneIds: 
+
  - Asia/Aden
  - America/Cuiaba
  - Etc/GMT+9
