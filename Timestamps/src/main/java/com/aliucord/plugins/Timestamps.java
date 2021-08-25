@@ -75,7 +75,7 @@ public class Timestamps extends Plugin {
 
     commands.registerCommand(
         "timestamp",
-        "Generates a unix timestamp",
+        "Generates a unix timestamp and copies it to the clipboard",
         options,
         ctx -> {
           String result;
