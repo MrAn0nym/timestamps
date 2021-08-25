@@ -2,7 +2,7 @@
     "default": {
         "minimumDiscordVersion": 80202,
         "version": "1.0.0",
-        "build": "https://raw.githubusercontent.com/USERNAME/REPONAME/builds/%s.zip"
+        "build": "https://raw.githubusercontent.com/MrAn0nym/timestamps/builds/%s.zip"
     },
     "MyFirstPlugin": {
         "version": "1.0.0"
