@@ -1,4 +1,4 @@
-# `Aliucord-plugins-template`
+# `Aliucord-plugins`
 
 Template for an [Aliucord](https://github.com/Aliucord) plugins repo
 
