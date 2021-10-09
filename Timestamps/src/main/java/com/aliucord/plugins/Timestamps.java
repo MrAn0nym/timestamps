@@ -3,75 +3,77 @@ package com.aliucord.plugins;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.os.Build;
-import androidx.annotation.NonNull;
+import android.os.Build.VERSION_CODES;
 import androidx.annotation.RequiresApi;
+import com.aliucord.Utils;
+import com.aliucord.annotations.AliucordPlugin;
 import com.aliucord.api.CommandsAPI;
 import com.aliucord.entities.Plugin;
 import com.discord.api.commands.ApplicationCommandType;
 import com.discord.api.commands.CommandChoice;
-import com.discord.models.commands.ApplicationCommandOption;
 import java.time.DateTimeException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 
-// This class is never used so your IDE will likely complain. Let's make it shut up!
 @SuppressWarnings("unused")
+@AliucordPlugin
 public class Timestamps extends Plugin {
-  @NonNull
-  @Override
-  // Plugin Manifest - Required
-  public Manifest getManifest() {
-    var manifest = new Manifest();
-    manifest.authors =
-        new Manifest.Author[] {new Manifest.Author("Namenlosxy", 339303461877186560L)};
-    manifest.description = "Generates unix timestamps for discord and copies it to the clipboard";
-    manifest.version = "1.0.2";
-    manifest.updateUrl = "https://raw.githubusercontent.com/MrAn0nym/timestamps/builds/updater.json";
-    return manifest;
-  }
 
-  @RequiresApi(api = Build.VERSION_CODES.O)
+  @RequiresApi(api = VERSION_CODES.O)
   @Override
   // Called when your plugin is started. This is the place to register command, add patches, etc
   public void start(Context context) {
     var modes =
         Arrays.asList(
-            new CommandChoice("Short Time", "t"),
-            new CommandChoice("Long Time", "T"),
-            new CommandChoice("Short Date", "d"),
-            new CommandChoice("Long Date", "D"),
-            new CommandChoice("Short Date/Time", "f"),
-            new CommandChoice("Long Date/Time", "F"),
-            new CommandChoice("Relative Time", "R"));
+            Utils.createCommandChoice("Short Time", "t"),
+            Utils.createCommandChoice("Long Time", "T"),
+            Utils.createCommandChoice("Short Date", "d"),
+            Utils.createCommandChoice("Long Date", "D"),
+            Utils.createCommandChoice("Short Date/Time", "f"),
+            Utils.createCommandChoice("Long Date/Time", "F"),
+            Utils.createCommandChoice("Relative Time", "R"));
+
+    ZoneId.getAvailableZoneIds();
+
+    var timezones = new ArrayList<CommandChoice>();
+
+    for (String s : ZoneId.getAvailableZoneIds()) {
+      timezones.add(Utils.createCommandChoice(s, s));
+    }
 
     var options =
         Arrays.asList(
-            new ApplicationCommandOption(
-                ApplicationCommandType.INTEGER, "yyyy", "The year", null, false, false, null, null),
-            new ApplicationCommandOption(
-                ApplicationCommandType.INTEGER, "MM", "The month", null, false, false, null, null),
-            new ApplicationCommandOption(
-                ApplicationCommandType.INTEGER, "dd", "The day", null, false, false, null, null),
-            new ApplicationCommandOption(
-                ApplicationCommandType.INTEGER, "HH", "The hour", null, false, false, null, null),
-            new ApplicationCommandOption(
-                ApplicationCommandType.INTEGER, "mm", "The minute", null, false, false, null, null),
-            new ApplicationCommandOption(
-                ApplicationCommandType.INTEGER, "ss", "The second", null, false, false, null, null),
-            new ApplicationCommandOption(
-                ApplicationCommandType.STRING, "z", "The timezone", null, false, false, null, null),
-            new ApplicationCommandOption(
+            Utils.createCommandOption(ApplicationCommandType.INTEGER, "yyyy", "The year"),
+            Utils.createCommandOption(ApplicationCommandType.INTEGER, "MM", "The month"),
+            Utils.createCommandOption(ApplicationCommandType.INTEGER, "dd", "The day"),
+            Utils.createCommandOption(ApplicationCommandType.INTEGER, "HH", "The hour"),
+            Utils.createCommandOption(ApplicationCommandType.INTEGER, "mm", "The minute"),
+            Utils.createCommandOption(ApplicationCommandType.INTEGER, "ss", "The second"),
+            Utils.createCommandOption(
+                ApplicationCommandType.STRING,
+                "z",
+                "The timezone",
+                null,
+                false,
+                false,
+                null,
+                timezones,
+                null,
+                false),
+            Utils.createCommandOption(
                 ApplicationCommandType.STRING,
                 "mode",
                 "The mode in which discord will display the date",
                 null,
                 false,
                 false,
+                null,
                 modes,
-                null));
+                null,
+                false));
 
     commands.registerCommand(
         "timestamp",
@@ -83,12 +85,12 @@ public class Timestamps extends Plugin {
           ClipboardManager clipboard =
               (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
 
-          var year = ctx.getIntOrDefault("yyyy", Calendar.getInstance().get(Calendar.YEAR));
-          var month = ctx.getIntOrDefault("MM", Calendar.getInstance().get(Calendar.MONTH));
-          var day = ctx.getIntOrDefault("dd", Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
-          var hour = ctx.getIntOrDefault("HH", Calendar.getInstance().get(Calendar.HOUR));
-          var minute = ctx.getIntOrDefault("mm", Calendar.getInstance().get(Calendar.MINUTE));
-          var second = ctx.getIntOrDefault("ss", Calendar.getInstance().get(Calendar.SECOND));
+          var year = ctx.getLongOrDefault("yyyy", Calendar.getInstance().get(Calendar.YEAR));
+          var month = ctx.getLongOrDefault("MM", Calendar.getInstance().get(Calendar.MONTH));
+          var day = ctx.getLongOrDefault("dd", Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+          var hour = ctx.getLongOrDefault("HH", Calendar.getInstance().get(Calendar.HOUR));
+          var minute = ctx.getLongOrDefault("mm", Calendar.getInstance().get(Calendar.MINUTE));
+          var second = ctx.getLongOrDefault("ss", Calendar.getInstance().get(Calendar.SECOND));
           var zoneString = ctx.getStringOrDefault("z", ZoneId.systemDefault().toString());
           var mode = ctx.getStringOrDefault("mode", "f");
           try {
@@ -98,8 +100,18 @@ public class Timestamps extends Plugin {
           }
 
           try {
+
             // Create ZonedDateTime object
-            ZonedDateTime time = ZonedDateTime.of(year, month, day, hour, minute, second, 0, zone);
+            ZonedDateTime time =
+                ZonedDateTime.of(
+                    (int) year,
+                    (int) month,
+                    (int) day,
+                    (int) hour,
+                    (int) minute,
+                    (int) second,
+                    0,
+                    zone);
 
             // Create message
             String message =
