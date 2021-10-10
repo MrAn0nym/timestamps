@@ -610,5 +610,5 @@ All other IDs are parsed as region-based zone IDs. Region IDs must match the reg
  - Pacific/Guadalcanal
  - Europe/Athens
  - US/Pacific
- - Europe/Monaco]
+ - Europe/Monaco
 
