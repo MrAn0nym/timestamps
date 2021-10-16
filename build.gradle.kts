@@ -31,8 +31,8 @@ subprojects {
 
     aliucord {
         author("Namenlosxy", 339303461877186560L)
-        updateUrl.set("https://raw.githubusercontent.com/MrAn0nym/timestamps/builds/updater.json")
-        buildUrl.set("https://raw.githubusercontent.com/MrAn0nym/timestamps/builds/%s.zip")
+        updateUrl.set("https://raw.githubusercontent.com/MrAn0nym/Aliucord-Plugins/builds/updater.json")
+        buildUrl.set("https://raw.githubusercontent.com/MrAn0nym/Aliucord-Plugins/builds/%s.zip")
     }
 
     android {
